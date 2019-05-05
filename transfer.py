@@ -15,7 +15,7 @@ import os
 import copy
 
 
-def train_model(model, criterion, optimizer, scheduler,dataloaders,device,dataset_sizes,    num_epochs=25):
+def train_model(model, criterion, optimizer, scheduler,dataloaders,device,dataset_sizes,    num_epochs):
     since = time.time()
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0

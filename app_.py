@@ -9,6 +9,8 @@ def build_args():
     parser.add_argument('-dir', help = 'path', type = str)
     parser.add_argument('-device', help = 'device', type = str)
     parser.add_argument('-savepath', help = 'savepath', type = str)
+    parser.add_argument('-num_epochs', help = 'number of epochs', type = int)
+    parser.add_argument('-batch_size', help = 'batch size', type = int)
     args = parser.parse_args()
     return args
 
@@ -25,10 +27,9 @@ def model_save(savepath, model):
 
 def main():
     args = build_args()
-    image_datasets, dataloaders, dataset_sizes, class_names, device = ut.data_transforms(args.dir, args.device)
-    print(image_datasets) 
+    image_datasets, dataloaders, dataset_sizes, class_names, device = ut.data_transforms(args.dir, args.device,args.batch_size)
     model_ft, criterion, optimizer_ft, exp_lr_scheduler = tr.finetune_convnet(device)
-    model_trained_ = tr.train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,dataloaders, device,  num_epochs=25)    
+    model_trained_ = tr.train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler, dataloaders, device, dataset_sizes,   num_epochs=args.num_epochs)    
      
     model_save(args.savepath, model_trained_)
 
